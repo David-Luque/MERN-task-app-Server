@@ -9,7 +9,9 @@ const app = express();
 connectDB();
 
 //enable cors
-app.use(cors());
+app.use(cors({
+    origin: 'https://sleepy-franklin-3366bf.netlify.app'
+}));
 
 //enable express.json
 app.use(express.json({ extended: true }));
