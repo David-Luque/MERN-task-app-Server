@@ -9,10 +9,10 @@ const app = express();
 connectDB();
 
 //enable cors
-// app.use(cors({
-//     origin: [process.env.FRONTEND_POINT, "http://localhost:3000" ]
-// }));
-app.use(cors());
+app.use(cors({
+    origin: [process.env.FRONTEND_POINT, "http://localhost:3000" ]
+}));
+//app.use(cors());
 
 
 //enable express.json

@@ -4,7 +4,6 @@ const { validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
 
 exports.createUser = async (req, res)=>{
-
     //check for errors
     const errors = validationResult(req);
     if(!errors.isEmpty()) {
@@ -38,7 +37,6 @@ exports.createUser = async (req, res)=>{
                 id: user.id
             }
         };
-
         jwt.sign(payload, process.env.SECRET, {
             expiresIn: 3600 //1h
         }, (error, token)=>{

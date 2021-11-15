@@ -18,14 +18,14 @@ exports.authenticateUser = async (req, res)=>{
         const user = await User.findOne({ email });
         
         if(!user) {
-            return res.status(400).json({ msg: "This user does not exist" })
+            return res.status(400).json({ msg: 'This user does not exist' })
         }
 
         //check user password
         const correctPass = await bcrypt.compare(password, user.password);
 
         if(!correctPass) {
-            return res.status(400).json({ msg: "Incorrect password" })
+            return res.status(400).json({ msg: 'Incorrect password' })
         }
 
         //if everything is correct: create and sign json web token
