@@ -27,7 +27,6 @@ exports.createProject = async (req, res)=>{
     
 };
 
-
 //obtain all project from current user
 exports.getProjects = async (req, res)=>{
     try {
@@ -38,7 +37,6 @@ exports.getProjects = async (req, res)=>{
         res.status(500).send('There was an error')
     }
 };
-
 
 //update project
 exports.updatedProject = async (req, res)=>{

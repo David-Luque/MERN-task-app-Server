@@ -17,7 +17,7 @@ exports.createTask = async (req, res)=>{
         if(!projectFromDB) {
             return res.status(404).json({ msg: 'Project not found' })
         }
-        //verify project owner 
+        //verify project owner
         if(projectFromDB.owner.toString() !== req.user.id) {
             return res.status(401).json({ msg: 'Unauthorized' })
         }
@@ -78,8 +78,11 @@ exports.updateTask = async (req, res)=>{
         
         //create new task with new info
         const newTask = {};
+        //if (name)
         newTask.name = name;
+        //if(isCompleted)
         newTask.isCompleted = isCompleted;
+        
         //save task
         const task = await Task.findOneAndUpdate({_id: req.params.id}, newTask, { new: true });
         res.json({ task });

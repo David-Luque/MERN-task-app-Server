@@ -10,7 +10,6 @@ exports.createUser = async (req, res)=>{
         return res.status(400).json({ errors: errors.array() })
     }
 
-
     const { email, password } = req.body;
 
     try {
