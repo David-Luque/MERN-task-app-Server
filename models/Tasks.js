@@ -10,13 +10,13 @@ const taskSchema = mongoose.Schema({
         type: Boolean,
         default: false
     },
-    createdAt: {
-        type: Date,
-        default: Date.now()
-    },
     project: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Project'
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now()
     }
 });
 

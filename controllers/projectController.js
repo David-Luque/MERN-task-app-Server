@@ -48,10 +48,9 @@ exports.updatedProject = async (req, res)=>{
     
     //extract project info
     const { name } = req.body;
+    
     const newProject = {};
-    if(name) {
-        newProject.name = name;
-    }
+    if(name) newProject.name = name;
 
     try {
         //check project ID

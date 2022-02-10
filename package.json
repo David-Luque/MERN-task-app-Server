@@ -1,7 +1,7 @@
 {
   "name": "mern-task-server",
   "version": "1.0.0",
-  "description": "MERN API para MERN Tasks",
+  "description": "MERN API for MERN Tasks",
   "main": "index.js",
   "scripts": {
     "start": "node .",
