@@ -98,15 +98,15 @@ exports.deleteTask = async (req, res)=>{
     const { project } = req.query;
 
     try {
-        //check if task exist
+        //get task from DB
         const taskInDB = await Task.findById(req.params.id);
+        //check if task exist
         if(!taskInDB) {
             return res.status(404).json({ msg: 'Task not found' })
         }
 
         //extract project
         const projectInDB = await Project.findById(project);
-        
         //verify project owner 
         if(projectInDB.owner.toString() !== req.user.id) {
             return res.status(401).json({ msg: 'Unauthorized' })

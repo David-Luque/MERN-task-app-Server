@@ -33,14 +33,13 @@ exports.createUser = async (req, res)=>{
         //create and sign json web token
         const payload = {
             user: {
-                id: user.id
+                id: user.id 
             }
         };
         jwt.sign(payload, process.env.SECRET, {
             expiresIn: 3600 //1h
-        }, (error, token)=>{
+        }, (error, token) => {
             if(error) throw error;
-
             //confirmation message
             res.json({ token });
         })
