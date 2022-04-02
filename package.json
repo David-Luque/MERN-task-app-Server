@@ -2,6 +2,7 @@
   "name": "mern-task-server",
   "version": "1.0.0",
   "description": "MERN API for MERN Tasks",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "start": "node .",
