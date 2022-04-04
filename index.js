@@ -6,6 +6,9 @@ import dotenv from 'dotenv';
 //const cors = require('cors');
 import cors from 'cors';
 
+import userRoutes from './routes/users.js'
+
+
 //create server
 const app = express();
 
@@ -22,7 +25,8 @@ app.use(cors({
 app.use(express.json({ extended: true }));
 
 //import routes
-app.use("/api/users", require('./routes/users'));
+//app.use("/api/users", require('./routes/users'));
+app.use("/api/users", userRoutes);
 app.use("/api/auth", require('./routes/auth'));
 app.use("/api/projects", require('./routes/projects'));
 app.use("/api/tasks", require('./routes/tasks'));

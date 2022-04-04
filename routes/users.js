@@ -1,8 +1,12 @@
 //Routes to users
-const express = require('express');
+//const express = require('express');
+import express from 'express';
 const router = express.Router();
-const userController = require('../controllers/userController');
-const { check } = require('express-validator');
+//const userController = require('../controllers/userController');
+import { createUser } from '../controllers/userController.js';
+//const { check } = require('express-validator');
+import { check } from 'express-validator';
+
 
 //route to create user
 router.post('/',
@@ -11,7 +15,8 @@ router.post('/',
         check('email', "Select a valid email").isEmail(),
         check('password', "Password must be at least 6 characters long").isLength({ min: 6 })
     ],
-    userController.createUser
+    createUser
 )
 
-module.exports = router;
+//module.exports = router;
+export default router;
