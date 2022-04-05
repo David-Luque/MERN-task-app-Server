@@ -6,6 +6,7 @@ import bcrypt from 'bcryptjs';
 import { validationResult } from 'express-validator';
 //const jwt = require('jsonwebtoken');
 import jwt from 'jsonwebtoken';
+import idGenerator from '../helpers/idGenerator.js'
 
 
 //exports.createUser = async (req, res)=>{
@@ -33,6 +34,9 @@ async function createUser(req, res) {
         // //hash password
         // const salt = await bcrypt.genSalt(10);
         // user.password = await bcrypt.hash(password, salt);
+
+        //add unique token to user
+        user.token = idGenerator();
 
         //Save new user
         await user.save();

@@ -7,6 +7,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 
 import userRoutes from './routes/users.js'
+import authRoutes from './routes/auth.js'
 
 
 //create server
@@ -27,7 +28,8 @@ app.use(express.json({ extended: true }));
 //import routes
 //app.use("/api/users", require('./routes/users'));
 app.use("/api/users", userRoutes);
-app.use("/api/auth", require('./routes/auth'));
+//app.use("/api/auth", require('./routes/auth'));
+app.use("/api/auth", authRoutes);
 app.use("/api/projects", require('./routes/projects'));
 app.use("/api/tasks", require('./routes/tasks'));
 

@@ -2,7 +2,8 @@
 const express = require('express');
 const router = express.Router();
 const { check } = require('express-validator');
-const authController = require('../controllers/authController');
+//const authController = require('../controllers/authController');
+import { authenticateUser, authenticatedUser } from '../controllers/authController.js'
 const auth = require('../middleware/auth');
 
 //route to autorice user
@@ -10,13 +11,14 @@ router.post('/',
     [
         check('email', "Select a valid email").isEmail()
     ],
-    authController.authenticateUser
+    authenticateUser
 )
 
 router.get('/',
     auth,
-    authController.authenticatedUser
+    authenticatedUser
 );
 
 
-module.exports = router;
+//module.exports = router;
+export default router;
