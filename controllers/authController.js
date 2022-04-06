@@ -83,7 +83,29 @@ const authenticatedUser = async (req, res)=>{
     }
 };
 
+const confirmFunc = async (req, res)=>{
+    const { token } = req.params;
+
+    const userToConfirm = await User.findOne({ token });
+
+    if(!userToConfirm) {
+        const error = new Error('Token not valid');
+        return res.status(404).json({ msg: error.message });
+    }
+
+    try {
+        userToConfirm.confirmed = true;
+        userToConfirm.token = '';
+        await userToConfirm.save();
+        res.json({ msg: "User successfully validated" });
+
+    } catch (error) {
+        ocnsole.log(error);
+    }
+};
+
 export {
     authenticateUser,
-    authenticatedUser
+    authenticatedUser,
+    confirmFunc 
 }
