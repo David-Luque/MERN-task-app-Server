@@ -3,7 +3,13 @@ const express = require('express');
 const router = express.Router();
 const { check } = require('express-validator');
 //const authController = require('../controllers/authController');
-import { authenticateUser, authenticatedUser, confirmFunc } from '../controllers/authController.js'
+import { 
+    authenticateUser,
+    authenticatedUser, 
+    confirmFunc, 
+    forgetPass,
+    checkToken
+} from '../controllers/authController.js'
 const auth = require('../middleware/auth');
 
 //route to autorice user
@@ -20,6 +26,10 @@ router.get('/',
 );
 
 router.post('/confirm/:token', confirmFunc);
+
+router.post('recover-password', forgetPass);
+
+router.get('recover-password/:token', checkToken);
 
 
 //module.exports = router;

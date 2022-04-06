@@ -6,7 +6,8 @@ import bcrypt from 'bcryptjs';
 import { validationResult } from 'express-validator';
 //const jwt = require('jsonwebtoken');
 import jwt from 'jsonwebtoken';
-import jwtGenerator from '../helpers/jwtGenerator.js'
+import jwtGenerator from '../helpers/jwtGenerator.js';
+import idGenerator from '../helpers/idGenerator.js';
 
 
 //exports.authenticateUser = async (req, res)=>{
@@ -100,12 +101,46 @@ const confirmFunc = async (req, res)=>{
         res.json({ msg: "User successfully validated" });
 
     } catch (error) {
-        ocnsole.log(error);
+        console.log(error);
     }
 };
+
+const forgetPass = async (req, res)=>{
+    const { email } = req.body;
+
+    const user = await User.findOne({ email });
+
+    if(!user) {
+        const error = new Error('Email not valid');
+        return res.status(404).json({ msg: error.message });
+    };
+
+    try {
+        user.token = idGenerator();
+        await user.save();
+        res.json({ msg: "We have sent an email to recover your password" })
+    } catch (error) {
+        console.log(error)
+    }
+};
+
+const checkToken = async (req, res)=>{
+    const { token } = req.params;
+    const validToken = await User.findOne({ token });
+
+    if(!validToken) {
+        const error = new Error('Token not valid');
+        return res.status(404).json({ msg: error.message });
+    }
+
+    res.json({ msg: 'Token valid - User exist' });
+};
+
 
 export {
     authenticateUser,
     authenticatedUser,
-    confirmFunc 
+    confirmFunc,
+    forgetPass,
+    checkToken
 }
