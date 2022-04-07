@@ -8,9 +8,11 @@ import {
     authenticatedUser, 
     confirmFunc, 
     forgetPass,
-    checkToken
+    checkToken,
+    newPassword,
+    getProfile
 } from '../controllers/authController.js'
-const auth = require('../middleware/auth');
+import checkAuth from '../middleware/checkAuth.js';
 
 //route to autorice user
 router.post('/',
@@ -20,17 +22,21 @@ router.post('/',
     authenticateUser
 )
 
-router.get('/',
-    auth,
+router.get('/profile',
+    checkAuth,
     authenticatedUser
 );
+
+router.get('/profile', checkAuth, getProfile);
 
 router.post('/confirm/:token', confirmFunc);
 
 router.post('recover-password', forgetPass);
 
-router.get('recover-password/:token', checkToken);
-
+// router.get('recover-password/:token', checkToken);
+// router.post('recover-password/:token', newPassword);
+//WE CAN DO INSTEAD:
+router.route('recover-password/:token').get(checkToken).post(newPassword)
 
 //module.exports = router;
 export default router;

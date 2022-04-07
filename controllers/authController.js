@@ -136,11 +136,40 @@ const checkToken = async (req, res)=>{
     res.json({ msg: 'Token valid - User exist' });
 };
 
+const newPassword = async (req, res)=>{
+    const { token } = req.params;
+    const { password } = req.body;
+
+    const user = await User.findOne({ token });
+
+    if(!user) {
+        const error = new Error('Token not valid');
+        return res.status(404).json({ msg: error.message });
+    }
+
+    try {
+        user.password = password;
+        user.token = '';
+        await user.save();
+        res.json({ msg: "Password successfully modified" });
+
+    } catch (error) {
+        console.log(error)
+    }
+};
+
+const getProfile = async (req, res)=>{
+    const { user } = req;
+    res.json(user);
+};
+
 
 export {
     authenticateUser,
     authenticatedUser,
     confirmFunc,
     forgetPass,
-    checkToken
+    checkToken,
+    newPassword,
+    getProfile
 }
