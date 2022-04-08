@@ -1,7 +1,9 @@
-const Project = require('../models/Project');
-const { validationResult } = require('express-validator');
+// const Project = require('../models/Project');
+// const { validationResult } = require('express-validator');
+import Project from '../models/Project.js';
+import { validationResult } from 'express-validator';
 
-exports.createProject = async (req, res)=>{
+const createProject = async (req, res)=>{
     //check for errors
     const errors = validationResult(req);
     if(!errors.isEmpty()) {
@@ -14,11 +16,9 @@ exports.createProject = async (req, res)=>{
         const project = new Project(req.body);
 
         //save owner by JWT
-        project.owner = req.user.id
-
-        await project.save();
-
-        res.json(project)
+        project.owner = req.user._id
+        const savedProject = await project.save();
+        res.json(savedProject)
 
     } catch(error) {
         console.log(error);
@@ -28,9 +28,10 @@ exports.createProject = async (req, res)=>{
 };
 
 //obtain all project from current user
-exports.getProjects = async (req, res)=>{
+const getProjects = async (req, res)=>{
     try {
-        const projects = await Project.find({ owner: req.user.id }).sort({ createdAt: -1 })
+        //const projects = await Project.find({ owner: req.user._id }).sort({ createdAt: -1 })
+        const projects = Project.find().where('owner').equals(req.user);
         res.json({ projects });
     } catch (error) {
         console.log(error);
@@ -38,8 +39,25 @@ exports.getProjects = async (req, res)=>{
     }
 };
 
+const getSingleProject = async (req, res)=>{
+    const { id } = req.params;
+
+    const project = Project.findById(id);
+
+    if(!project) {
+        const error = new Error("Not found");
+        return res.status(404).json({ msg: error.message });
+    }
+    
+
+    if(project.owner.toString() !== req.user._id.toString()) {
+        const error = new Error("Not valid");
+        return res.status(401).json({ msg: error.message });
+    };
+};
+
 //update project
-exports.updatedProject = async (req, res)=>{
+const updatedProject = async (req, res)=>{
     //check for errors
     const errors = validationResult(req);
     if(!errors.isEmpty()) {
@@ -77,7 +95,7 @@ exports.updatedProject = async (req, res)=>{
 };
 
 //delete project
-exports.deleteProject = async (req, res)=>{
+const deleteProject = async (req, res)=>{
     try {
         //check project ID
         let project = await Project.findById(req.params.id)
@@ -100,4 +118,24 @@ exports.deleteProject = async (req, res)=>{
         console.log(error)
         res.status(500).send('There was an error on server')
     }
+};
+
+const addPartners = async (req, res)=>{
+
+};
+
+const removePartners = async (req, res)=>{
+    
+};
+
+//const getTasks = async (req, res)=>{};
+
+export {
+    createProject,
+    getProjects,
+    getSingleProject,
+    updatedProject,
+    deleteProject,
+    addPartners,
+    removePartners
 };

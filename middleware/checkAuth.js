@@ -13,18 +13,19 @@ const checkAuth = async (req, res, next)=>{
             const decoded = jwt.verify(token, process.env.SECRET);
 
             req.user = await User.findById(decoded.id).select("-password -confirmed -token -createdAt -updatedAt -__v");
-            next();
+            return next();
 
         } catch (error) {
-            res.status(404).json({ msg: "ERROR" });
+            return res.status(404).json({ msg: "ERROR" });
         }
     }
     
     if(!token){
         const error = new Error("Token not valid");
-        res.status(401).json({ msg:  error.message});
+        return res.status(401).json({ msg:  error.message});
     }
     
+    next();
 
     // //read token from header
     //const token = req.header('x-auth-token')
