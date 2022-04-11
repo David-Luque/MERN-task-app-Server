@@ -1,35 +1,57 @@
-const express = require('express');
+// const express = require('express');
+import express from 'express';
 const router = express.Router();
-const auth = require('../middleware/auth');
-const taskController = require('../controllers/taskController');
-const { check } = require('express-validator');
+// const auth = require('../middleware/auth');
+import checkAuth from '../middleware/checkAuth.js';
+// const taskController = require('../controllers/taskController');
+import {
+    createTask,
+    getTasks,
+    updateTask,
+    deleteTask,
+    changeStatus
+} from '../controllers/taskController.js'
+// const { check } = require('express-validator');
+import { check } from 'express-validator'; 
 
 //create task
 router.post('/',
-    auth,
+    checkAuth,
     [
         check('name', 'Task name is required').not().isEmpty(),
         check('project', 'Task project is required').not().isEmpty()
     ], 
-    taskController.createTask
+    createTask
 )
 
 //get all project tasks
 router.get('/',
-    auth,
-    taskController.getTasks
+    checkAuth,
+    getTasks
 );
 
 //edit task
-router.put('/:id',
-    auth,
-    taskController.updateTask
-);
+// router.put('/:id',
+//     checkAuth,
+//     updateTask
+// );
 
-//edit task
-router.delete('/:id',
-    auth,
-    taskController.deleteTask
-);
+// //edit task
+// router.delete('/:id',
+//     checkAuth,
+//     deleteTask
+// );
 
-module.exports = router;
+router
+    .route('/:id')
+        .get(checkAuth, getTask)
+        .put(checkAuth, updateTask)
+        .delete(checkAuth, deleteTask);
+
+        
+router.post('status/:id', checkAuth, changeStatus);
+
+
+
+//module.exports = router;
+export default router;

@@ -1,9 +1,12 @@
-const Task = require('../models/Tasks');
-const Project = require('../models/Project');
-const { validationResult } = require('express-validator');
+// const Task = require('../models/Tasks');
+import Task from '../models/Tasks.js'
+// const Project = require('../models/Project');
+import Project from '../models/Project.js';
+// const { validationResult } = require('express-validator');
+import { validationResult } from 'express-validator';
 
 //create task
-exports.createTask = async (req, res)=>{ 
+const createTask = async (req, res)=>{ 
     const errors = validationResult(req);
     if(!errors.isEmpty()) {
         res.status(400).json({ errors: errors.array() })
@@ -33,7 +36,7 @@ exports.createTask = async (req, res)=>{
 };
 
 // get all tasks
-exports.getTasks = async (req, res)=>{
+const getTasks = async (req, res)=>{
     try {
         const { project } = req.query; //because we sent "{params: { project }}"
 
@@ -58,7 +61,7 @@ exports.getTasks = async (req, res)=>{
 };
 
 //update task
-exports.updateTask = async (req, res)=>{
+const updateTask = async (req, res)=>{
     
     const { project, name, isCompleted } = req.body;
     
@@ -93,7 +96,7 @@ exports.updateTask = async (req, res)=>{
 };
 
 //delete task
-exports.deleteTask = async (req, res)=>{
+const deleteTask = async (req, res)=>{
     
     const { project } = req.query;
 
@@ -120,4 +123,17 @@ exports.deleteTask = async (req, res)=>{
         console.log(error);
         res.status(500).send('Server error');
     }
+};
+
+const changeStatus = async (req, res)=>{
+
+};
+
+
+export {
+    createTask,
+    getTasks,
+    updateTask,
+    deleteTask,
+    changeStatus
 };

@@ -8,7 +8,8 @@ import cors from 'cors';
 
 import userRoutes from './routes/users.js'
 import authRoutes from './routes/auth.js'
-import projectRoutes from './routes/projects.js'
+import projectRoutes from './routes/projects.js';
+import taskRoutes from './routes/tasks.js';
 
 
 //create server
@@ -33,7 +34,8 @@ app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 //app.use("/api/projects", require('./routes/projects'));
 app.use("/api/projects", projectRoutes);
-app.use("/api/tasks", require('./routes/tasks'));
+//app.use("/api/tasks", require('./routes/tasks'));
+app.use('/api/tasks', taskRoutes)
 
 // app port
 const PORT = process.env.PORT || 4000;
