@@ -9,7 +9,8 @@ import {
     getTasks,
     updateTask,
     deleteTask,
-    changeStatus
+    changeStatus,
+    getOneTask
 } from '../controllers/taskController.js'
 // const { check } = require('express-validator');
 import { check } from 'express-validator'; 
@@ -44,11 +45,11 @@ router.get('/',
 
 router
     .route('/:id')
-        .get(checkAuth, getTask)
+        .get(checkAuth, getOneTask)
         .put(checkAuth, updateTask)
         .delete(checkAuth, deleteTask);
 
-        
+
 router.post('status/:id', checkAuth, changeStatus);
 
 

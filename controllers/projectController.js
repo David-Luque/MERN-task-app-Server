@@ -1,7 +1,9 @@
 // const Project = require('../models/Project');
 // const { validationResult } = require('express-validator');
 import Project from '../models/Project.js';
+import Task from '../models/Tasks.js';
 import { validationResult } from 'express-validator';
+
 
 const createProject = async (req, res)=>{
     //check for errors
@@ -53,6 +55,13 @@ const getSingleProject = async (req, res)=>{
         const error = new Error("Not valid");
         return res.status(401).json({ msg: error.message });
     };
+
+    const tasks = await Task.find().where('project').equals(project._id);
+
+    res.json({
+        project,
+        tasks
+    });
 };
 
 //update project
@@ -176,7 +185,6 @@ const removePartners = async (req, res)=>{
     
 };
 
-//const getTasks = async (req, res)=>{};
 
 export {
     createProject,

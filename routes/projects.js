@@ -71,8 +71,6 @@ router.route('/:id')
 router.post('/add-partner/:id', checkAuth, addPartners);
 router.post('/remove-partner/:id', checkAuth, removePartners);
 
-//router.get('/tasks/:id', checkAuth, getTasks);
-
 
 //module.exports = router;
 export default router;
